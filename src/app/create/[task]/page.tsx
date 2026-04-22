@@ -3,8 +3,11 @@
 import { useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Plus, Save } from "lucide-react";
+import { ArrowLeft, Plus, Save, Sparkles } from "lucide-react";
 import { NavbarShell } from "@/components/shared/navbar-shell";
+import { Footer } from "@/components/shared/footer";
+import { HeartfeltPageLayout } from "@/components/shared/heartfelt-page-layout";
+import { HEARTFELT } from "@/components/shared/heartfelt-constants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -70,8 +73,9 @@ const FORM_CONFIG: Record<TaskKey, { title: string; description: string; fields:
     ],
   },
   article: {
-    title: "Create Article",
-    description: "Write a local-only article post.",
+    title: "Publish a new article",
+    description:
+      "Draft a story for your readers. Content saves locally in your browser until you wire a real backend — same forest green and sunflower palette as the rest of the site.",
     fields: [
       { key: "title", label: "Article title", type: "text", required: true },
       { key: "summary", label: "Short summary", type: "textarea", required: true },
@@ -94,8 +98,9 @@ const FORM_CONFIG: Record<TaskKey, { title: string; description: string; fields:
     ],
   },
   profile: {
-    title: "Create Profile",
-    description: "Create a local-only business profile.",
+    title: "Add a public profile",
+    description:
+      "Introduce a person or team on the profiles directory. Fields are tuned for clarity and trust — logos and links render on the profile surface after you save.",
     fields: [
       { key: "brandName", label: "Brand name", type: "text", required: true },
       { key: "summary", label: "Short summary", type: "textarea", required: true },
@@ -182,17 +187,32 @@ export default function CreateTaskPage() {
 
   if (!taskConfig || !formConfig) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-white" style={{ color: HEARTFELT.green }}>
         <NavbarShell />
-        <main className="mx-auto max-w-3xl px-4 py-16 text-center">
-          <h1 className="text-2xl font-semibold text-foreground">Task not available</h1>
-          <p className="mt-2 text-muted-foreground">
-            This task is not enabled for the current site.
+        <div className="h-1 w-full" style={{ backgroundColor: HEARTFELT.orange }} />
+        <main className="mx-auto max-w-lg px-4 py-20 text-center sm:py-24">
+          <Sparkles className="mx-auto h-12 w-12" style={{ color: HEARTFELT.orange }} />
+          <h1 className="mt-6 text-2xl font-extrabold tracking-tight sm:text-3xl">This create type isn&apos;t available</h1>
+          <p className="mt-4 text-sm leading-relaxed text-neutral-600 sm:text-base">
+            The content type in your URL is not enabled on this site. Use{" "}
+            <Link className="font-semibold underline" href="/articles">
+              Articles
+            </Link>{" "}
+            or{" "}
+            <Link className="font-semibold underline" href="/profile">
+              Profiles
+            </Link>{" "}
+            from the navigation.
           </p>
-          <Button className="mt-6" asChild>
+          <Button
+            asChild
+            className="mt-10 h-11 rounded-2xl px-8 font-bold"
+            style={{ backgroundColor: HEARTFELT.yellow, color: HEARTFELT.green }}
+          >
             <Link href="/">Back home</Link>
           </Button>
         </main>
+        <Footer />
       </div>
     );
   }
@@ -270,47 +290,78 @@ export default function CreateTaskPage() {
     router.push(`/local/${taskKey}/${post.slug}`);
   };
 
+  const { green, yellow, orange } = HEARTFELT;
+
   return (
-    <div className="min-h-screen bg-background">
-      <NavbarShell />
-      <main className="mx-auto max-w-4xl px-4 py-12">
-        <div className="mb-8 flex items-center gap-3">
-          <Button variant="ghost" size="icon" asChild>
+    <HeartfeltPageLayout
+      compact
+      eyebrow={`Create · ${taskConfig.label}`}
+      title={formConfig.title}
+      description={formConfig.description}
+      actions={
+        <>
+          <Button
+            variant="outline"
+            asChild
+            className="h-11 rounded-2xl border-2 px-4 font-semibold"
+            style={{ borderColor: green, color: green }}
+          >
             <Link href="/">
-              <ArrowLeft className="h-5 w-5" />
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Home
             </Link>
           </Button>
-          <div>
-            <h1 className="text-2xl font-semibold text-foreground">{formConfig.title}</h1>
-            <p className="text-sm text-muted-foreground">{formConfig.description}</p>
+          <Button variant="outline" asChild className="h-11 rounded-2xl border border-[#0a1f0a]/15 font-semibold text-neutral-700">
+            <Link href={taskConfig.route}>
+              Browse {taskConfig.label}
+              <Plus className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </>
+      }
+    >
+      <div className="mx-auto max-w-3xl">
+        <div
+          className="rounded-3xl border border-[#0a1f0a]/10 bg-gradient-to-b from-amber-50/30 to-white p-6 shadow-[0_20px_50px_rgba(10,31,10,0.08)] sm:p-8"
+          style={{ color: green }}
+        >
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge
+              className="rounded-lg border-0 px-3 py-1 text-xs font-bold"
+              style={{ backgroundColor: yellow, color: green }}
+            >
+              {taskConfig.label}
+            </Badge>
+            <Badge variant="outline" className="rounded-lg border-[#0a1f0a]/20 text-xs font-semibold text-neutral-600">
+              Saves in this browser only
+            </Badge>
           </div>
-        </div>
 
-        <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary">{taskConfig.label}</Badge>
-            <Badge variant="outline">Local-only</Badge>
-          </div>
+          <p className="mt-4 text-sm leading-relaxed text-neutral-600">
+            Fill the fields below, then save. You&apos;ll get a preview link under{" "}
+            <code className="rounded bg-neutral-100 px-1.5 py-0.5 text-xs text-neutral-800">/local/{taskKey}/…</code> — perfect
+            for demos and drafts.
+          </p>
 
-          <div className="mt-6 grid gap-6">
+          <div className="mt-8 grid gap-6">
             {formConfig.fields.map((field) => (
               <div key={field.key} className="grid gap-2">
-                <Label>
-                  {field.label} {field.required ? <span className="text-red-500">*</span> : null}
+                <Label className="text-sm font-semibold text-[#0A1F0A]">
+                  {field.label} {field.required ? <span style={{ color: orange }}>*</span> : null}
                 </Label>
                 {field.type === "textarea" ? (
                   <Textarea
-                    rows={4}
+                    rows={field.key === "description" ? 8 : 4}
                     placeholder={field.placeholder}
                     value={values[field.key] || ""}
                     onChange={(event) => updateValue(field.key, event.target.value)}
-                    className="border-2 border-slate-200 bg-white focus-visible:ring-2 focus-visible:ring-primary/30"
+                    className="rounded-xl border-2 border-[#0a1f0a]/12 bg-white text-neutral-900 focus-visible:border-[#0a1f0a]/30 focus-visible:ring-2 focus-visible:ring-[#FFC107]/40"
                   />
                 ) : field.type === "category" ? (
                   <select
                     value={values[field.key] || ""}
                     onChange={(event) => updateValue(field.key, event.target.value)}
-                    className="h-11 rounded-lg border-2 border-slate-200 bg-white px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                    className="h-11 rounded-xl border-2 border-[#0a1f0a]/12 bg-white px-3 text-sm text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107]/40"
                   >
                     <option value="">Select category</option>
                     {CATEGORY_OPTIONS.map((option) => (
@@ -324,6 +375,7 @@ export default function CreateTaskPage() {
                     <Input
                       type="file"
                       accept="application/pdf"
+                      className="cursor-pointer rounded-xl border-2 border-[#0a1f0a]/12 bg-white"
                       onChange={(event) => {
                         const file = event.target.files?.[0];
                         if (!file) return;
@@ -353,10 +405,9 @@ export default function CreateTaskPage() {
                       placeholder="Or paste a PDF URL"
                       value={values[field.key] || ""}
                       onChange={(event) => updateValue(field.key, event.target.value)}
+                      className="h-11 rounded-xl border-2 border-[#0a1f0a]/12 bg-white"
                     />
-                    {uploadingPdf ? (
-                      <p className="text-xs text-muted-foreground">Uploading PDF…</p>
-                    ) : null}
+                    {uploadingPdf ? <p className="text-xs text-neutral-500">Uploading PDF…</p> : null}
                   </div>
                 ) : (
                   <Input
@@ -368,19 +419,24 @@ export default function CreateTaskPage() {
                     }
                     value={values[field.key] || ""}
                     onChange={(event) => updateValue(field.key, event.target.value)}
-                    className="h-11 border-2 border-slate-200 bg-white focus-visible:ring-2 focus-visible:ring-primary/30"
+                    className="h-11 rounded-xl border-2 border-[#0a1f0a]/12 bg-white text-neutral-900 focus-visible:ring-2 focus-visible:ring-[#FFC107]/40"
                   />
                 )}
               </div>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button onClick={handleSubmit}>
+          <div className="mt-10 flex flex-wrap gap-3 border-t border-[#0a1f0a]/10 pt-8">
+            <Button
+              type="button"
+              onClick={handleSubmit}
+              className="h-12 rounded-2xl px-8 text-base font-bold"
+              style={{ backgroundColor: yellow, color: green }}
+            >
               <Save className="mr-2 h-4 w-4" />
-              Save locally
+              Save draft locally
             </Button>
-            <Button variant="ghost" asChild>
+            <Button variant="outline" asChild className="h-12 rounded-2xl border-2 font-semibold" style={{ borderColor: green, color: green }}>
               <Link href={taskConfig.route}>
                 View {taskConfig.label}
                 <Plus className="ml-2 h-4 w-4" />
@@ -388,7 +444,7 @@ export default function CreateTaskPage() {
             </Button>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </HeartfeltPageLayout>
   );
 }
