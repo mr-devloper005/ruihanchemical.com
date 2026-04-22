@@ -474,7 +474,11 @@ function CurationHome({ primaryTask, bookmarkPosts, profilePosts, articlePosts }
 
 export default async function HomePage() {
   if (HOME_PAGE_OVERRIDE_ENABLED) {
-    return <HomePageOverride />
+    const [articlePosts, profilePosts] = await Promise.all([
+      fetchTaskPosts('article', 6, { allowMockFallback: true, fresh: true }),
+      fetchTaskPosts('profile', 8, { allowMockFallback: true, fresh: true }),
+    ])
+    return <HomePageOverride articlePosts={articlePosts} profilePosts={profilePosts} />
   }
 
   const enabledTasks = SITE_CONFIG.tasks.filter((task) => task.enabled)
