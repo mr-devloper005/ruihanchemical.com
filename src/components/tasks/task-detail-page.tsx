@@ -19,6 +19,7 @@ import { getFactoryState } from "@/design/factory/get-factory-state";
 import { getProductKind } from "@/design/factory/get-product-kind";
 import { DirectoryTaskDetailPage } from "@/design/products/directory/task-detail-page";
 import { TASK_DETAIL_PAGE_OVERRIDE_ENABLED, TaskDetailPageOverride } from "@/overrides/task-detail-page";
+import { ArticleDetailCard } from "@/components/article/article-detail-card";
 
 type PostContent = {
   category?: string;
@@ -252,6 +253,21 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
       <NavbarShell />
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <SchemaJsonLd data={schemaPayload} />
+        {isArticle ? (
+          <ArticleDetailCard
+            post={post}
+            articleHtml={articleHtml}
+            articleSummary={articleSummary}
+            articleAuthor={articleAuthor}
+            articleDate={articleDate}
+            category={category}
+            images={images}
+            postTags={postTags}
+            related={related}
+            taskRoute={taskConfig?.route || "/"}
+          />
+        ) : (
+          <>
         <Link
           href={taskConfig?.route || "/"}
           className="mb-6 inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
@@ -266,48 +282,6 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
           )}
         >
           <div className={cn(isClassified ? "space-y-8" : "")}>
-            {isArticle ? (
-              <div className="mx-auto w-full max-w-4xl space-y-6">
-                <h1 className="text-4xl font-semibold leading-tight text-foreground">
-                  {post.title}
-                </h1>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-                  <span>By {articleAuthor}</span>
-                  {articleDate ? <span>{articleDate}</span> : null}
-                  <Badge variant="secondary" className="inline-flex items-center gap-1">
-                    <Tag className="h-3.5 w-3.5" />
-                    {category}
-                  </Badge>
-                </div>
-                {postTags.length ? (
-                  <div className="flex flex-wrap gap-2">
-                    {postTags.map((tag) => (
-                      <Badge key={tag} variant="outline">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                ) : null}
-                {articleSummary ? (
-                  <p className="text-base leading-7 text-muted-foreground">{articleSummary}</p>
-                ) : null}
-                {images[0] ? (
-                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-border bg-muted">
-                    <ContentImage
-                      src={images[0]}
-                      alt={`${post.title} featured image`}
-                      fill
-                      className="object-cover"
-                      intrinsicWidth={1600}
-                      intrinsicHeight={900}
-                    />
-                  </div>
-                ) : null}
-                <RichContent html={articleHtml} className="leading-8 prose-p:my-6 prose-h2:my-8 prose-h3:my-6 prose-ul:my-6" />
-                <ArticleComments slug={post.slug} />
-              </div>
-            ) : null}
-
             {!isArticle ? (
               <>
                 {!isBookmark ? (
@@ -474,9 +448,11 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
           </aside>
           ) : null}
         </div>
+        </>
+        )}
 
         <section className="mt-12">
-          {related.length ? (
+          {!isArticle && related.length ? (
             <>
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-xl font-semibold text-foreground">
@@ -502,6 +478,7 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
             </div>
             </>
           ) : null}
+          {!isArticle && (
           <nav className="mt-6 rounded-2xl border border-border bg-card/60 p-4">
             <p className="text-sm font-semibold text-foreground">Related links</p>
             <ul className="mt-2 space-y-2 text-sm">
@@ -535,6 +512,7 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
               </li>
             </ul>
           </nav>
+          )}
         </section>
       </main>
       <Footer />

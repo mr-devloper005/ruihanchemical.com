@@ -190,62 +190,7 @@ export function HomePageOverride({ articlePosts, profilePosts }: HomePageOverrid
           </div>
         </section>
 
-        <section className="border-t border-neutral-200 bg-neutral-50/80 py-16">
-          <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-neutral-500">People</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl" style={{ color: green }}>
-              The faces driving the mission forward
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-neutral-600">
-              Meet researchers, writers, and collaborators who make {SITE_CONFIG.name} a trusted source for the community.
-            </p>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {Array.from({ length: 4 }).map((_, index) => {
-                const post = featuredProfiles[index]
-                if (post) {
-                  return (
-                    <Link
-                      key={post.id}
-                      href={`/profile/${post.slug}`}
-                      className="group flex flex-col overflow-hidden rounded-3xl bg-white p-2 shadow-[0_16px_40px_rgba(10,31,10,0.08)] transition-transform hover:-translate-y-0.5"
-                    >
-                      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl">
-                        <ContentImage
-                          src={getPostImage(post)}
-                          alt={post.title}
-                          fill
-                          className="object-cover transition-transform group-hover:scale-105"
-                        />
-                      </div>
-                      <div className="p-4 text-left">
-                        <h3 className="text-lg font-bold" style={{ color: green }}>
-                          {post.title}
-                        </h3>
-                        <p className="mt-1 text-sm text-neutral-500 line-clamp-2">{getProfileRole(post)}</p>
-                      </div>
-                    </Link>
-                  )
-                }
-                return (
-                  <div
-                    key={`placeholder-${index}`}
-                    className="flex flex-col justify-center overflow-hidden rounded-3xl border border-dashed border-neutral-300 bg-white p-6 text-left text-sm text-neutral-500"
-                  >
-                    More profiles will appear as they are published on the site.
-                  </div>
-                )
-              })}
-            </div>
-            <Button
-              asChild
-              className="mt-10 h-12 rounded-2xl px-10 text-base font-semibold shadow-md"
-              style={{ backgroundColor: yellow, color: green }}
-            >
-              <Link href="/profile">View all</Link>
-            </Button>
-          </div>
-        </section>
-
+        
         {articlePosts[0] ? (
           <section className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
             <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl">

@@ -79,8 +79,8 @@ export function ContactPageOverride() {
                 <Mail className="mt-0.5 h-5 w-5 shrink-0" style={{ color: orange }} />
                 <div>
                   <p className="font-semibold text-[#0A1F0A]">Editorial</p>
-                  <a className="text-sm hover:underline" href="mailto:editorial@example.com" style={{ color: green }}>
-                    editorial@example.com
+                  <a className="text-sm hover:underline" href={`mailto:${SITE_CONFIG.contactEmail}`} style={{ color: green }}>
+                    {SITE_CONFIG.contactEmail}
                   </a>
                 </div>
               </li>

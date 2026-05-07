@@ -215,42 +215,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section>
-          <h2 className="text-center text-2xl font-extrabold sm:text-3xl" style={{ color: green }}>
-            A few faces behind the work
-          </h2>
-          <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-neutral-600">
-            These roles keep our editorial and community standards high. The full list of public profiles is on the
-            directory.
-          </p>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {leadership.map((person) => (
-              <div
-                key={person.name}
-                className="overflow-hidden rounded-2xl border border-[#0a1f0a]/10 bg-white shadow-md transition hover:-translate-y-0.5"
-              >
-                <div className="relative aspect-[4/3] w-full">
-                  <ContentImage src={person.image} alt={person.name} fill className="object-cover" />
-                </div>
-                <div className="p-5">
-                  <p className="font-bold text-[#0A1F0A]">{person.name}</p>
-                  <p className="text-sm font-medium" style={{ color: orange }}>{person.role}</p>
-                  <p className="mt-2 text-sm text-neutral-600">{person.blurb}</p>
-                </div>
               </div>
-            ))}
-          </div>
-          <div className="mt-10 text-center">
-            <Button
-              asChild
-              className="h-12 rounded-2xl px-8 font-bold"
-              style={{ backgroundColor: yellow, color: green }}
-            >
-              <Link href="/profile">Open team profiles</Link>
-            </Button>
-          </div>
-        </section>
-      </div>
     </HeartfeltPageLayout>
   );
 }

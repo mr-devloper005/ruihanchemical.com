@@ -39,7 +39,6 @@ const mainLinks = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Articles', href: '/articles' },
-  { name: 'Profiles', href: '/profile' },
   { name: 'Contact', href: '/contact' },
 ] as const
 
@@ -149,7 +148,6 @@ export function NavbarOverride() {
                 style={isActive ? { backgroundColor: green } : undefined}
               >
                 {item.name === 'Articles' ? <FileText className="h-4 w-4" /> : null}
-                {item.name === 'Profiles' ? <User className="h-4 w-4" /> : null}
                 {item.name}
               </Link>
             )
