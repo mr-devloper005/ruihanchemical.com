@@ -29,6 +29,7 @@ export type SiteConfig = {
   domain: string
   baseUrl: string
   defaultOgImage: string
+  contactEmail: string
   tasks: TaskConfig[]
   taskViews: Partial<Record<TaskKey, string>>
   seo: {
@@ -46,6 +47,7 @@ export const SITE_CONFIG: SiteConfig = {
   domain: siteIdentity.domain,
   baseUrl: siteIdentity.url,
   defaultOgImage: siteIdentity.ogImage,
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'editorial@example.com',
   tasks: siteTaskDefinitions.map((task) => ({ ...task })),
   taskViews: { ...siteTaskViews },
   seo: {
