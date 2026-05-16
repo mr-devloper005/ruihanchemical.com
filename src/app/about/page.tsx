@@ -76,14 +76,6 @@ export default function AboutPage() {
           >
             <Link href="/articles">Read articles</Link>
           </Button>
-          <Button
-            asChild
-            variant="outline"
-            className="h-11 rounded-2xl border-2 font-semibold"
-            style={{ borderColor: green, color: green }}
-          >
-            <Link href="/profile">See profiles</Link>
-          </Button>
         </>
       }
     >

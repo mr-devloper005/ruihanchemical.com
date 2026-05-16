@@ -46,22 +46,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(async (email: string, password: string) => {
     setIsLoading(true)
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    // Mock login - in production this would validate credentials
-    if (email && password) {
-      const storedUser = loadFromStorage<User | null>(storageKeys.user, null)
-      const nextUser = storedUser?.email === email
-        ? storedUser
-        : buildUser({
-            email,
-            name: email.split('@')[0]?.replace(/[^a-zA-Z0-9]/g, '') || currentUser.name,
-          })
-      setUser(nextUser)
-      saveToStorage(storageKeys.user, nextUser)
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
+      // Mock login - in production this would validate credentials
+      if (email && password) {
+        const storedUser = loadFromStorage<User | null>(storageKeys.user, null)
+        const nextUser = storedUser?.email === email
+          ? storedUser
+          : buildUser({
+              email,
+              name: email.split('@')[0]?.replace(/[^a-zA-Z0-9]/g, '') || currentUser.name,
+            })
+        setUser(nextUser)
+        saveToStorage(storageKeys.user, nextUser)
+      }
+    } finally {
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }, [buildUser])
 
   const logout = useCallback(() => {
@@ -73,19 +76,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signup = useCallback(async (name: string, email: string, password: string) => {
     setIsLoading(true)
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    // Mock signup
-    if (name && email && password) {
-      const nextUser = buildUser({
-        name,
-        email,
-      })
-      setUser(nextUser)
-      saveToStorage(storageKeys.user, nextUser)
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500))
+
+      // Mock signup
+      if (name && email && password) {
+        const nextUser = buildUser({
+          name,
+          email,
+        })
+        setUser(nextUser)
+        saveToStorage(storageKeys.user, nextUser)
+      }
+    } finally {
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }, [buildUser])
 
   const updateUser = useCallback((updates: Partial<User>) => {

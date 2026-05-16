@@ -4,7 +4,7 @@ export const siteIdentity = {
   tagline: process.env.NEXT_PUBLIC_SITE_TAGLINE || 'Article , Social profile platform',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ||
-    'A article , social profile site for Ruihanchemical, built for clean discovery and structured publishing.',
+    'A article site for Ruihanchemical, built for clean discovery and structured publishing.',
   domain: process.env.NEXT_PUBLIC_SITE_DOMAIN || 'ruihanchemical.com',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://ruihanchemical.com',
   ogImage: process.env.NEXT_PUBLIC_SITE_OG_IMAGE || '/og-default.png',

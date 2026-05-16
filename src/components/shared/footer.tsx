@@ -27,29 +27,29 @@ const footerLinks = {
   })),
   company: [
     { name: 'About', href: '/about' },
-    { name: 'Team', href: '/team' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Press', href: '/press' },
+    // { name: 'Team', href: '/team' },
+    // { name: 'Careers', href: '/careers' },
+    // { name: 'Blog', href: '/blog' },
+    // { name: 'Press', href: '/press' },
   ],
   resources: [
     { name: 'Help Center', href: '/help' },
-    { name: 'Community', href: '/community' },
-    { name: 'Developers', href: '/developers' },
-    { name: 'Status', href: '/status' },
+    // { name: 'Community', href: '/community' },
+    // { name: 'Developers', href: '/developers' },
+    // { name: 'Status', href: '/status' },
   ],
   legal: [
     { name: 'Privacy', href: '/privacy' },
     { name: 'Terms', href: '/terms' },
     { name: 'Cookies', href: '/cookies' },
-    { name: 'Licenses', href: '/licenses' },
+    // { name: 'Licenses', href: '/licenses' },
   ],
 }
 
 const socialLinks = [
-  { name: 'Twitter', href: 'https://twitter.com', icon: Twitter },
-  { name: 'GitHub', href: 'https://github.com', icon: Github },
-  { name: 'LinkedIn', href: 'https://linkedin.com', icon: Linkedin },
+  // { name: 'Twitter', href: 'https://twitter.com', icon: Twitter },
+  // { name: 'GitHub', href: 'https://github.com', icon: Github },
+  // { name: 'LinkedIn', href: 'https://linkedin.com', icon: Linkedin },
 ]
 
 export function Footer() {

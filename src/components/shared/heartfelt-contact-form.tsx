@@ -99,11 +99,6 @@ export function HeartfeltContactForm() {
         Send message
       </Button>
       <p className="text-center text-xs text-neutral-500">
-        Prefer email? You can also reach the team at{' '}
-        <a className="font-semibold hover:underline" href="mailto:hello@example.com" style={{ color: orange }}>
-          hello@example.com
-        </a>
-        .
       </p>
     </form>
   )

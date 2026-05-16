@@ -1,27 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ChevronDown, FileText, Menu, User, X } from 'lucide-react'
+import { Menu, X, Plus, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/lib/auth-context'
 import { SITE_CONFIG } from '@/lib/site-config'
 import { siteContent } from '@/config/site.content'
 import { BrandLogo } from '@/components/shared/brand-logo'
 import { cn } from '@/lib/utils'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-
-const NavbarAuthControls = dynamic(
-  () => import('@/components/shared/navbar-auth-controls').then((mod) => mod.NavbarAuthControls),
-  { ssr: false, loading: () => null }
-)
+import { useAuth } from '@/lib/auth-context'
 
 export const NAVBAR_OVERRIDE_ENABLED = true
 
@@ -38,14 +26,13 @@ const pageLinks = [
 const mainLinks = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
-  { name: 'Articles', href: '/articles' },
   { name: 'Contact', href: '/contact' },
 ] as const
 
 export function NavbarOverride() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, logout } = useAuth()
 
   return (
     <header
@@ -81,45 +68,33 @@ export function NavbarOverride() {
             )
           })}
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="h-10 gap-1 rounded-xl px-3.5 text-sm font-semibold text-neutral-600 hover:bg-neutral-100/80 data-[state=open]:bg-neutral-100/80"
-              >
-                Resources
-                <ChevronDown className="h-4 w-4 opacity-60" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="start"
-              sideOffset={8}
-              className="z-[100] min-w-[220px] border border-[#0a1f0a]/12 bg-white p-1 text-[#0A1F0A] shadow-lg"
-            >
-              {pageLinks.map((l) => (
-                <DropdownMenuItem key={l.href} asChild className="cursor-pointer text-sm font-medium text-[#0A1F0A] focus:bg-neutral-100 focus:text-[#0A1F0A]">
-                  <Link href={l.href}>{l.name}</Link>
-                </DropdownMenuItem>
-              ))}
-              <DropdownMenuItem asChild className="cursor-pointer text-sm font-medium text-[#0A1F0A] focus:bg-neutral-100 focus:text-[#0A1F0A]">
-                <Link href="/articles">All articles</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        
         </div>
 
         <div className="flex items-center gap-2">
-          {!isAuthenticated ? (
-            <Button
-              asChild
-              className="hidden h-10 rounded-2xl px-5 text-sm font-bold text-white shadow-md sm:inline-flex"
-              style={{ backgroundColor: orange }}
-            >
-              <Link href="/register">Get started</Link>
-            </Button>
-          ) : null}
           {isAuthenticated ? (
-            <NavbarAuthControls />
+            <>
+              <Button
+                asChild
+                className="hidden h-10 rounded-2xl px-5 text-sm font-bold sm:inline-flex"
+                style={{ backgroundColor: yellow, color: green }}
+              >
+                <Link href="/create/article">
+                  <Plus className="mr-1 h-4 w-4" />
+                  Create Article
+                </Link>
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={logout}
+                className="hidden h-10 rounded-2xl border-2 px-4 text-sm font-semibold sm:inline-flex"
+                style={{ borderColor: green, color: green }}
+              >
+                <LogOut className="mr-1 h-4 w-4" />
+                Sign out
+              </Button>
+            </>
           ) : (
             <Button
               asChild
@@ -147,7 +122,6 @@ export function NavbarOverride() {
                 className={cn('flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold', isActive ? 'text-white' : 'text-[#0A1F0A]')}
                 style={isActive ? { backgroundColor: green } : undefined}
               >
-                {item.name === 'Articles' ? <FileText className="h-4 w-4" /> : null}
                 {item.name}
               </Link>
             )
@@ -162,6 +136,41 @@ export function NavbarOverride() {
               {l.name}
             </Link>
           ))}
+          <div className="mt-2 border-t border-neutral-200 pt-3">
+            {isAuthenticated ? (
+              <div className="space-y-2">
+                <Link
+                  href="/create/article"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center rounded-2xl px-4 py-3 text-sm font-semibold"
+                  style={{ backgroundColor: yellow, color: green }}
+                >
+                  <Plus className="mr-2 h-4 w-4" />
+                  Create Article
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    logout()
+                    setOpen(false)
+                  }}
+                  className="flex w-full items-center rounded-2xl border border-[#0a1f0a]/20 px-4 py-3 text-left text-sm font-semibold text-[#0A1F0A]"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sign out
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setOpen(false)}
+                className="flex items-center rounded-2xl px-4 py-3 text-sm font-semibold"
+                style={{ backgroundColor: yellow, color: green }}
+              >
+                Sign in
+              </Link>
+            )}
+          </div>
         </div>
       )}
     </header>

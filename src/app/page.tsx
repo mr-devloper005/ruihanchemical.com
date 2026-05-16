@@ -822,15 +822,9 @@ export default async function HomePage() {
 
   if (HOME_PAGE_OVERRIDE_ENABLED) {
 
-    const [articlePosts, profilePosts] = await Promise.all([
+    const articlePosts = await fetchTaskPosts('article', 6, { allowMockFallback: true, fresh: true })
 
-      fetchTaskPosts('article', 6, { allowMockFallback: true, fresh: true }),
-
-      fetchTaskPosts('profile', 8, { allowMockFallback: true, fresh: true }),
-
-    ])
-
-    return <HomePageOverride articlePosts={articlePosts} profilePosts={profilePosts} />
+    return <HomePageOverride articlePosts={articlePosts} />
 
   }
 
