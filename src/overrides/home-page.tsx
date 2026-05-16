@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link'
 import { ArrowRight, Play, Star } from 'lucide-react'
 import { ContentImage } from '@/components/shared/content-image'
@@ -12,15 +14,13 @@ export const HOME_PAGE_OVERRIDE_ENABLED = true
 
 export type HomePageOverrideProps = {
   articlePosts: SitePost[]
-  profilePosts: SitePost[]
 }
 
 const green = '#0A1F0A'
 const yellow = '#FFC107'
 const orange = '#E64A19'
 
-const heroBg =
-  'https://images.unsplash.com/photo-1469571486292-0baa58b4a09d?w=2000&q=80&auto=format&fit=crop'
+const heroBg = '/hero-bg.jpg'
 
 function getPostImage(post?: SitePost | null) {
   const media = Array.isArray(post?.media) ? post?.media : []
@@ -53,11 +53,9 @@ function getCategory(post: SitePost) {
   return 'Article'
 }
 
-export function HomePageOverride({ articlePosts, profilePosts }: HomePageOverrideProps) {
-  const featuredProfiles = profilePosts.slice(0, 4)
+export function HomePageOverride({ articlePosts }: HomePageOverrideProps) {
   const featuredArticles = articlePosts.slice(0, 3)
-  const activityFromArticles = articlePosts.length > 0
-  const activityItems = activityFromArticles ? articlePosts.slice(0, 4) : profilePosts.slice(0, 4)
+  const activityItems = articlePosts.slice(0, 4)
   const schemaData = [
     {
       '@context': 'https://schema.org',
@@ -103,7 +101,7 @@ export function HomePageOverride({ articlePosts, profilePosts }: HomePageOverrid
               Ideas &amp; people shaping {SITE_CONFIG.name}
             </h1>
             <p className="mt-4 text-2xl font-bold sm:text-3xl" style={{ color: yellow }}>
-              Read stories. Meet the team.
+              Read stories.
             </p>
             <p className="mt-6 max-w-2xl text-sm leading-relaxed text-white/90 sm:text-base">
               {SITE_CONFIG.description}
@@ -116,13 +114,6 @@ export function HomePageOverride({ articlePosts, profilePosts }: HomePageOverrid
               >
                 <Link href="/articles">Browse articles</Link>
               </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="h-12 rounded-2xl border-2 border-white/40 bg-white/10 px-8 text-base font-semibold text-white hover:bg-white/20"
-              >
-                <Link href="/profile">View profiles</Link>
-              </Button>
             </div>
           </div>
         </section>
@@ -132,63 +123,6 @@ export function HomePageOverride({ articlePosts, profilePosts }: HomePageOverrid
           Clarity &middot; Trust &middot; Community &middot; Research &middot; Connection
         </div>
 
-        <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:items-center">
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2">
-              {[0, 1, 2, 3].map((i) => {
-                const p = featuredProfiles[i] || articlePosts[i]
-                const src = p ? getPostImage(p) : '/placeholder.svg?height=400&width=400'
-                return (
-                  <div
-                    key={i}
-                    className={`overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(10,31,10,0.12)] ${
-                      i === 0 ? 'col-span-2 aspect-[2/1] sm:row-span-1' : 'aspect-[4/3]'
-                    }`}
-                  >
-                    <div className="relative h-full min-h-[120px] w-full">
-                      <ContentImage src={src} alt="" fill className="object-cover" />
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-            <div>
-              <div
-                className="inline-block rounded-2xl px-5 py-2 text-sm font-bold text-white shadow-md"
-                style={{ backgroundColor: green }}
-              >
-                50+ community voices
-              </div>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Our impact, in one place</h2>
-              <p className="mt-4 text-base leading-8 text-neutral-600">
-                {SITE_CONFIG.name} connects long-form writing with the people behind the work. Articles explain our science
-                and culture; profiles put faces to the mission.
-              </p>
-              <ul className="mt-6 space-y-3 text-sm text-neutral-600">
-                <li className="flex items-start gap-2">
-                  <span className="mt-0.5 inline-block h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: yellow }} />
-                  Peer-reviewed style storytelling for technical readers.
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-0.5 inline-block h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: yellow }} />
-                  Profiles for researchers, communicators, and partners.
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-0.5 inline-block h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: yellow }} />
-                  A calmer home page focused on what matters to you.
-                </li>
-              </ul>
-              <Link
-                href="/about"
-                className="mt-8 inline-flex items-center gap-2 text-sm font-bold"
-                style={{ color: orange }}
-              >
-                Learn more about us
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
 
         
         {articlePosts[0] ? (
@@ -229,7 +163,7 @@ export function HomePageOverride({ articlePosts, profilePosts }: HomePageOverrid
                 Be the reason someone learns something new
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-center text-neutral-600">
-                Quick picks from our latest articles and updates.
+                Quick picks from our latest articles.
               </p>
               <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {activityItems.map((post) => (
@@ -249,7 +183,7 @@ export function HomePageOverride({ articlePosts, profilePosts }: HomePageOverrid
                         className="mt-3 w-full rounded-xl text-xs font-bold"
                         style={{ backgroundColor: yellow, color: green }}
                       >
-                        <Link href={activityFromArticles ? `/articles/${post.slug}` : `/profile/${post.slug}`}>
+                        <Link href={`/articles/${post.slug}`}>
                           View more
                         </Link>
                       </Button>

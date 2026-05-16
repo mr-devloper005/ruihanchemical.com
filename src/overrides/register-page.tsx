@@ -34,35 +34,45 @@ export function RegisterPageOverride() {
   const [confirm, setConfirm] = useState('')
   const [agreed, setAgreed] = useState(false)
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleRegister = async () => {
     if (!name.trim() || !email.trim() || !password) {
       toast({ title: 'Missing fields', description: 'Please add your name, email, and password.', variant: 'destructive' })
-      return
+      return false
+    }
+    if (!email.includes('@')) {
+      toast({ title: 'Invalid email', description: 'Please enter a valid email address.', variant: 'destructive' })
+      return false
     }
     if (password !== confirm) {
       toast({ title: 'Passwords do not match', description: 'Check the password fields and try again.', variant: 'destructive' })
-      return
+      return false
     }
     if (password.length < 8) {
       toast({ title: 'Password too short', description: 'Use at least 8 characters.', variant: 'destructive' })
-      return
-    }
-    if (!agreed) {
-      toast({ title: 'Terms', description: 'Please confirm you agree to the terms to continue.', variant: 'destructive' })
-      return
+      return false
     }
     try {
       await signup(name.trim(), email.trim(), password)
       if (typeof window !== 'undefined') {
         const session = { at: Date.now(), email: email.trim(), newAccount: true }
-        window.localStorage.setItem(SESSION_KEY, JSON.stringify(session))
+        try {
+          window.localStorage.setItem(SESSION_KEY, JSON.stringify(session))
+        } catch {
+          // Ignore session write errors and continue redirect.
+        }
       }
       toast({ title: 'Account created', description: 'You are signed in and your session is saved on this device.' })
       router.push('/')
+      return true
     } catch {
       toast({ title: 'Sign up failed', description: 'Please try again in a moment.', variant: 'destructive' })
+      return false
     }
+  }
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    await handleRegister()
   }
 
   return (
@@ -108,7 +118,7 @@ export function RegisterPageOverride() {
           <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-[0_16px_48px_rgba(0,0,0,0.06)] sm:p-10">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500">New account</p>
             <h2 className="mt-2 text-2xl font-bold">Sign up in a minute</h2>
-            <form onSubmit={onSubmit} className="mt-8 space-y-5">
+            <form noValidate onSubmit={onSubmit} className="mt-8 space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="reg-name">Full name</Label>
                 <Input

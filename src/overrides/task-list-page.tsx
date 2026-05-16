@@ -61,21 +61,7 @@ export async function TaskListPageOverride({ task, category }: { task: TaskKey; 
                   className="h-11 rounded-2xl px-6 text-sm font-bold"
                   style={{ backgroundColor: yellow, color: green }}
                 >
-                  <Link href={isProfile ? '/about' : isArticle ? '/about' : '/help'}>Learn more</Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="h-11 rounded-2xl border-2 border-[#0a1f0a]/20 bg-white px-6 text-sm font-semibold"
-                >
-                  <Link
-                    href={
-                      isProfile ? '/articles' : isArticle ? '/profile' : taskConfig?.route || '/'
-                    }
-                  >
-                    {isProfile ? 'Read articles' : isArticle ? 'View profiles' : 'Browse'}
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
+                  <Link href="/about">Learn more</Link>
                 </Button>
               </div>
             </div>

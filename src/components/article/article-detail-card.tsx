@@ -86,10 +86,6 @@ export function ArticleDetailCard({
 
           {/* Article Meta */}
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-4">
-            <Badge variant="secondary" className="inline-flex items-center gap-1.5 px-3 py-1">
-              <Tag className="h-3.5 w-3.5" />
-              {category}
-            </Badge>
             <span className="flex items-center gap-1.5">
               <Clock className="h-4 w-4" />
               {readingTime} min read
@@ -144,16 +140,6 @@ export function ArticleDetailCard({
               </div>
             )}
 
-            {/* Tags */}
-            {postTags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {postTags.map((tag) => (
-                  <Badge key={tag} variant="outline" className="px-3 py-1">
-                    #{tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
 
             {/* Article Content */}
             <div className="prose prose-slate max-w-none">
@@ -223,27 +209,6 @@ export function ArticleDetailCard({
               </CardContent>
             </Card>
 
-            {/* Author Card */}
-            <Card className="border-border">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <User className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-foreground">About the Author</h3>
-                </div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <User className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground">{articleAuthor}</p>
-                    <p className="text-sm text-muted-foreground">Contributor</p>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Expert insights and analysis on topics related to {category.toLowerCase()}.
-                </p>
-              </CardContent>
-            </Card>
 
             {/* Trending Articles */}
             {related.length > 0 && (

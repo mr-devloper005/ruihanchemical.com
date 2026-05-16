@@ -332,9 +332,7 @@ export default function CreateTaskPage() {
             >
               {taskConfig.label}
             </Badge>
-            <Badge variant="outline" className="rounded-lg border-[#0a1f0a]/20 text-xs font-semibold text-neutral-600">
-              Saves in this browser only
-            </Badge>
+            
           </div>
 
           <p className="mt-4 text-sm leading-relaxed text-neutral-600">
@@ -434,7 +432,7 @@ export default function CreateTaskPage() {
               style={{ backgroundColor: yellow, color: green }}
             >
               <Save className="mr-2 h-4 w-4" />
-              Save draft locally
+              Save draft 
             </Button>
             <Button variant="outline" asChild className="h-12 rounded-2xl border-2 font-semibold" style={{ borderColor: green, color: green }}>
               <Link href={taskConfig.route}>

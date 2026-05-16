@@ -49,7 +49,7 @@ export function HeartfeltPageLayout({ eyebrow, title, description, actions, chil
         className="w-full py-2.5 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-white sm:text-[11px]"
         style={{ backgroundColor: HEARTFELT.orange }}
       >
-        Articles &middot; Profiles &middot; Community &middot; 2026
+        Articles &middot; Community &middot; 2026
       </div>
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">{children}</div>
       <Footer />

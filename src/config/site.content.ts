@@ -10,7 +10,7 @@ export const siteContent = {
   hero: {
     badge: 'Latest stories and visuals',
     title: ['A thoughtful home for', 'stories, visuals, and discovery.'],
-    description: 'A Article , Social profile site for Ruihanchemical, built for clean discovery and structured publishing.',
+    description: 'A Article site for Ruihanchemical, built for clean discovery and structured publishing.',
     primaryCta: {
       label: 'Read latest posts',
       href: '/articles',
@@ -29,7 +29,7 @@ export const siteContent = {
   home: {
     metadata: {
       title: 'Stories, visuals, and discoverable content',
-      description: 'A Article , Social profile site for Ruihanchemical, built for clean discovery and structured publishing.',
+      description: 'A article site for Ruihanchemical, built for clean discovery and structured publishing.',
       openGraphTitle: 'Stories, visuals, and discoverable content',
       openGraphDescription:
         'Discover articles, visual posts, and connected content through a calmer reading-first experience.',
@@ -61,7 +61,7 @@ export const siteContent = {
   cta: {
     badge: 'Start exploring',
     title: 'Explore articles, visuals, and resources through one connected experience.',
-    description: 'A Article , Social profile site for Ruihanchemical, built for clean discovery and structured publishing.',
+    description: 'A article site for Ruihanchemical, built for clean discovery and structured publishing.',
     primaryCta: {
       label: 'Read latest posts',
       href: '/articles',
@@ -78,31 +78,31 @@ export const siteContent = {
 export const taskPageMetadata: Record<Exclude<TaskKey, 'comment' | 'org' | 'social'>, { title: string; description: string }> = {
   article: {
     title: 'Articles and stories',
-    description: 'A Article , Social profile site for Ruihanchemical, built for clean discovery and structured publishing.',
+    description: 'A article site for Ruihanchemical, built for clean discovery and structured publishing.',
   },
   listing: {
     title: 'Listings and discoverable pages',
-    description: 'A Article , Social profile site for Ruihanchemical, built for clean discovery and structured publishing.',
+    description: 'A article site for Ruihanchemical, built for clean discovery and structured publishing.',
   },
   classified: {
     title: 'Classifieds and announcements',
-    description: 'A Article , Social profile site for Ruihanchemical, built for clean discovery and structured publishing.',
+    description: 'A article site for Ruihanchemical, built for clean discovery and structured publishing.',
   },
   image: {
     title: 'Images and visual posts',
-    description: 'A Article , Social profile site for Ruihanchemical, built for clean discovery and structured publishing.',
+    description: 'A article site for Ruihanchemical, built for clean discovery and structured publishing.',
   },
   profile: {
     title: 'Profiles and public pages',
-    description: 'A Article , Social profile site for Ruihanchemical, built for clean discovery and structured publishing.',
+    description: 'A article site for Ruihanchemical, built for clean discovery and structured publishing.',
   },
   sbm: {
     title: 'Curated links and saved resources',
-    description: 'A Article , Social profile site for Ruihanchemical, built for clean discovery and structured publishing.',
+    description: 'A article site for Ruihanchemical, built for clean discovery and structured publishing.',
   },
   pdf: {
     title: 'PDFs and downloadable resources',
-    description: 'A Article , Social profile site for Ruihanchemical, built for clean discovery and structured publishing.',
+    description: 'A article site for Ruihanchemical, built for clean discovery and structured publishing.',
   },
 }
 

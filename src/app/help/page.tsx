@@ -70,7 +70,7 @@ export default function HelpPage() {
     <HeartfeltPageLayout
       eyebrow="Support"
       title="Help center"
-      description={`Get unstuck on ${SITE_CONFIG.name}: reading, profiles, and account basics — without digging through a dozen product menus.`}
+      description={`Get unstuck on ${SITE_CONFIG.name}: reading, community, and account basics — without digging through a dozen product menus.`}
       actions={
         <Button
           asChild
@@ -139,7 +139,7 @@ export default function HelpPage() {
             <h2 className="px-4 pt-4 text-lg font-extrabold" style={{ color: green }}>
               Common questions
             </h2>
-            <p className="px-4 pb-2 text-sm text-neutral-600">Tap to expand. Content is current for this site’s articles &amp; profiles product.</p>
+            <p className="px-4 pb-2 text-sm text-neutral-600">Tap to expand. Content is current for this site’s articles &amp; community product.</p>
             <Accordion type="single" collapsible className="w-full border-t border-neutral-200/80">
               {faqItems.map((f) => (
                 <AccordionItem key={f.id} value={f.id} className="border-b border-neutral-200/80">

@@ -30,5 +30,9 @@ export function loadFromStorage<T>(key: string, fallback: T): T {
 
 export function saveToStorage<T>(key: string, value: T) {
   if (typeof window === 'undefined') return
-  window.localStorage.setItem(key, JSON.stringify(value))
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value))
+  } catch {
+    // Ignore storage write errors (quota/private mode), caller should still proceed.
+  }
 }
